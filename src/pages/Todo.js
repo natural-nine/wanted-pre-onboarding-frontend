@@ -87,15 +87,9 @@ const Todo = () => {
       isCompleted: isCompleted,
     });
   };
-
-  // const todoSubmit = () => {
-
-  // }
-
+  
   const testFn = (id, todo, completed) => {
     const todoText = todoRef.current.value;
-    // console.log(todos, istodo, completed);
-    console.log(todoText);
     instance
       .put(`/todos/${id}`, { isCompleted: completed, todo: todoText })
       .then((res) => {
@@ -144,12 +138,11 @@ const Todo = () => {
 const Wrap = styled.div`
   width: 100%;
   height: 100vh;
-  border: 1px solid red;
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #2c3e50; */
+  background-color: #ecf0f1;
 `;
 
 export default Todo;

@@ -8,7 +8,7 @@ const MyTodoList = ({
   isTodoList,
   todoCompleted,
   deleteTodo,
-  openModal
+  openModal,
 }) => {
   return (
     <Wrap>
@@ -38,21 +38,25 @@ const MyTodoList = ({
               <TodoSpan props={i.isCompleted}>{i.todo}</TodoSpan>
             </TodoSpanBox>
             <BtnBox>
-              <UpdateBtn
-                onClick={() => {
-                  openModal(i.id, i.todo, i.isCompleted);
-                }}
-                props={i.isCompleted}
-              >
-                수정
-              </UpdateBtn>
-              <DeleteBtn
-                onClick={() => {
-                  deleteTodo(i.id);
-                }}
-              >
-                삭제
-              </DeleteBtn>
+              <UpdateBtnBox>
+                <UpdateBtn
+                  onClick={() => {
+                    openModal(i.id, i.todo, i.isCompleted);
+                  }}
+                  props={i.isCompleted}
+                >
+                  수정
+                </UpdateBtn>
+              </UpdateBtnBox>
+              <DeleteBtnBox>
+                <DeleteBtn
+                  onClick={() => {
+                    deleteTodo(i.id);
+                  }}
+                >
+                  삭제
+                </DeleteBtn>
+              </DeleteBtnBox>
             </BtnBox>
           </TodoListBox>
         ))}
@@ -66,11 +70,13 @@ const MyTodoList = ({
 const Wrap = styled.div`
   width: 60%;
   height: 700px;
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   background-color: #fff;
   position: relative;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0px 12px 42px rgba(0, 0, 0, 0.2);
 `;
 
 const AddButtonBox = styled.div`
@@ -86,13 +92,13 @@ const AddButtonBox = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  box-shadow: 0px 12px 42px rgba(0, 0, 0, 0.2);
 `;
 const TitleBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  border: 1px solid red;
 `;
 const LeftTitle = styled.div`
   display: flex;
@@ -129,9 +135,11 @@ const MainBox = styled.div`
   width: 90%;
   height: 75vh;
   overflow-y: auto;
-  border: 1px solid red;
   margin: auto;
+  margin-top: 10px;
   padding: 15px 20px 45px 20px;
+  box-shadow: 0px 12px 42px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 `;
 
 const TodoListBox = styled.div`
@@ -161,7 +169,6 @@ const CheckInput = styled.input`
 const TodoSpanBox = styled.div`
   width: 70%;
   height: 50px;
-  /* border: 1px solid red; */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -180,19 +187,29 @@ const BtnBox = styled.div`
   align-items: center;
 `;
 
-const UpdateBtn = styled.button`
+const UpdateBtnBox = styled.div`
   width: 45%;
+  height: 40px;
+`;
+
+const UpdateBtn = styled.button`
+  width: 100%;
   height: 40px;
   border: none;
   color: #fff;
   background-color: #00b894;
   border-radius: 15px;
   cursor: pointer;
-  visibility: ${(props) => props.props && "hidden"};
+  display: ${(props) => props.props && "none"};
+`;
+
+const DeleteBtnBox = styled.div`
+  width: 45%;
+  height: 40px;
 `;
 
 const DeleteBtn = styled.button`
-  width: 45%;
+  width: 100%;
   height: 40px;
   border: none;
   color: #fff;

@@ -8,19 +8,24 @@ import instance from "../shared/axios";
 const Home = () => {
   const navigate = useNavigate();
 
+  // 이메일 패스워드 정규식
   const emailRegEx =
     /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
   const passwordRegEx = /^[A-Za-z0-9]{8,20}$/;
 
   const localUserToken = localStorage.getItem("userToken");
   
+  // 에러메세지 핸들링 state
   const [isErrorMsg, isSetErrorMsg] = useState("");
+
+  // boolean 으로 회원가입, 로그인 컴포넌트 보여주기
   const [isLogin, setIsLogin] = useState(false);
 
   const idRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
 
+  // 회원가입 
   const SignUpSubmit = (e) => {
     e.preventDefault();
     let userInfo = {
@@ -39,9 +44,8 @@ const Home = () => {
       instance
         .post("/auth/signup", userInfo)
         .then((res) => {
-          localStorage.setItem("userToken", res.data.access_token);
-          localStorage.setItem("userMail", userInfo.email);
-          navigate("/todo")
+          alert("회원가입 완료되었습니다.");
+          setIsLogin(true);
         })
         .catch((err) => {
           isSetErrorMsg(err.response.data.message)
@@ -49,6 +53,8 @@ const Home = () => {
     }
   };
 
+
+  // 로그인
   const SignInSubmit = (e) => {
     e.preventDefault();
     let userInfo = {
@@ -79,6 +85,8 @@ const Home = () => {
     }
   };
 
+
+  // 토큰 있을 시 /todo 페이지로 이동
   useEffect(() => {
     if (localUserToken) {
       navigate("/todo");
@@ -113,13 +121,13 @@ const Home = () => {
 const Wrap = styled.div`
   width: 100%;
   height: 100vh;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: #2c3e50; */
+  background-color: #ecf0f1;
 `;
 
 export default Home;

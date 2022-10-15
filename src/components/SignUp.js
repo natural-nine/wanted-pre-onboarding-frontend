@@ -49,10 +49,12 @@ const SignUp = ({
 const Wrap = styled.div`
   width: 60%;
   height: 700px;
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0px 12px 42px rgba(0, 0, 0, 0.2);
 `;
 
 const TitleBox = styled.div`
