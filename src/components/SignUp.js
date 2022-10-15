@@ -105,6 +105,7 @@ const SubmitButton = styled.button`
   background-color: #3498db;
   color: #fff;
   font-size: 1.5rem;
+  cursor: pointer;
 `;
 
 const ErrorBox = styled.div`

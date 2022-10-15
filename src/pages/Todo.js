@@ -15,6 +15,7 @@ const Todo = () => {
   const [isTodoUpdate, setIsTodoUpdate] = useState({});
   const [isTodoList, setIsTodoList] = useState("");
 
+  // todoList 가져오기
   const getTodos = () => {
     instance
       .get("/todos", {
@@ -29,24 +30,42 @@ const Todo = () => {
         console.log(err);
       });
   };
+
+  // todoList 가져오기
   useEffect(() => {
     getTodos();
   }, []);
 
+  // 로컬스토리지에 유저토큰 없을 시 "/" 페이지 이동
   useEffect(() => {
     if (!localUserToken) {
       navigate("/");
     }
   }, [localUserToken, navigate]);
 
-  const todoCompleted = (id, todo, completed) => {
+  // todoList 등록
+  const createTodo = () => {
+    const todoText = todoRef.current.value;
+    instance
+      .post("/todos", { todo:todoText })
+      .then((res) => {
+        setIsTodoList((prev) => [...prev, res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setIsModal(!isModal);
+  };
+
+  // todoList 완료
+  const completedTodo = (id, todo, completed) => {
     let isCompleted = !completed;
     instance
       .put(`/todos/${id}`, { isCompleted, todo })
-      .then((res) => {
+      .then(() => {
         setIsTodoList((todos) =>
-          todos.map((todo) =>
-            todo.id === id ? { ...todo, isCompleted: isCompleted } : todo
+          todos.map((i) =>
+            i.id === id ? { ...i, isCompleted: isCompleted } : i
           )
         );
       })
@@ -55,30 +74,41 @@ const Todo = () => {
       });
   };
 
-  const todoCreate = () => {
-    const todo = todoRef.current.value;
+  // todoList 수정
+  const updateTodo = (id, completed) => {
+    const todoText = todoRef.current.value;
     instance
-      .post("/todos", { todo })
-      .then((res) => {
-        setIsTodoList((prev) => [res.data, ...prev]);
+      .put(`/todos/${id}`, { isCompleted: completed, todo: todoText })
+      .then(() => {
+        setIsTodoList((todos) =>
+          todos.map((i) =>
+            i.id === id
+              ? { ...i, ...{ isCompleted: completed }, ...{ todo: todoText } }
+              : i
+          )
+        );
       })
       .catch((err) => {
         console.log(err);
       });
     setIsModal(!isModal);
   };
+
+  // todoList 삭제
   const deleteTodo = (id) => {
-    instance.delete(`/todos/${id}`).then((res) => {
+    instance.delete(`/todos/${id}`).then(() => {
       setIsTodoList((todo) => todo.filter((todo) => todo.id !== id));
     });
   };
 
+  // 로그아웃 로컬스토리지 삭제 -> "/" 페이지 이동
   const logOutClick = () => {
     localStorage.removeItem("userMail");
     localStorage.removeItem("userToken");
     navigate("/");
   };
 
+  // 모달 오픈
   const openModal = (id, todo, isCompleted) => {
     setIsModal(true);
     setIsTodoUpdate({
@@ -88,25 +118,6 @@ const Todo = () => {
     });
   };
   
-  const testFn = (id, todo, completed) => {
-    const todoText = todoRef.current.value;
-    instance
-      .put(`/todos/${id}`, { isCompleted: completed, todo: todoText })
-      .then((res) => {
-        setIsTodoList((todos) =>
-          todos.map((v) =>
-            v.id === id
-              ? { ...v, ...{ isCompleted: completed }, ...{ todo: todoText } }
-              : v
-          )
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setIsModal(!isModal);
-  };
-  console.log(isTodoList, "todo list!!!!!");
   return (
     <Wrap>
       {isTodoList && (
@@ -115,7 +126,7 @@ const Todo = () => {
           setIsModal={setIsModal}
           userMail={userMail}
           logOutClick={logOutClick}
-          todoCompleted={todoCompleted}
+          completedTodo={completedTodo}
           deleteTodo={deleteTodo}
           openModal={openModal}
         ></MyTodoList>
@@ -126,9 +137,9 @@ const Todo = () => {
             setIsModal(!isModal);
           }}
           todoRef={todoRef}
-          todoCreate={todoCreate}
+          createTodo={createTodo}
           isTodoUpdate={isTodoUpdate}
-          testFn={testFn}
+          updateTodo={updateTodo}
         ></MyTodoModal>
       )}
     </Wrap>

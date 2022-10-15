@@ -4,9 +4,9 @@ import styled from "styled-components";
 const MyTodoModal = ({
   closeModal,
   todoRef,
-  todoCreate,
+  createTodo,
   isTodoUpdate,
-  testFn,
+  updateTodo,
 }) => {
   const closeClick = () => {
     closeModal();
@@ -17,18 +17,26 @@ const MyTodoModal = ({
         <CloseBtn onClick={closeClick}>x</CloseBtn>
         <TodoBox>
           <TodoInput defaultValue={isTodoUpdate.todo} ref={todoRef} />
-          <TodoBtn
-            onClick={() => {
-              testFn(
-                isTodoUpdate.id,
-                isTodoUpdate.todo,
-                isTodoUpdate.isCompleted
-              );
-            }}
-          >
-            수정
-          </TodoBtn>
-          {/* <TodoBtn onClick={()=>{todoCreate()}}>등록</TodoBtn> */}
+          {isTodoUpdate.id ? (
+            <TodoBtn
+              onClick={() => {
+                updateTodo(
+                  isTodoUpdate.id,
+                  isTodoUpdate.isCompleted
+                );
+              }}
+            >
+              수정
+            </TodoBtn>
+          ) : (
+            <TodoBtn
+              onClick={() => {
+                createTodo();
+              }}
+            >
+              등록
+            </TodoBtn>
+          )}
         </TodoBox>
       </ModalMainBox>
     </Modal>
@@ -50,7 +58,7 @@ const Modal = styled.div`
 const ModalMainBox = styled.div`
   position: absolute;
   width: 50%;
-  height: 20%;
+  height: 25%;
   padding: 40px;
   text-align: center;
   background-color: rgb(255, 255, 255);

@@ -6,7 +6,7 @@ const MyTodoList = ({
   logOutClick,
   setIsModal,
   isTodoList,
-  todoCompleted,
+  completedTodo,
   deleteTodo,
   openModal,
 }) => {
@@ -18,7 +18,7 @@ const MyTodoList = ({
           <span>time</span>
         </LeftTitle>
         <RightTitle>
-          <span>Hello {userMail} 님!</span>
+          <span>안녕하세요 {userMail} 님</span>
           <span onClick={logOutClick}>로그아웃 &rarr;</span>
         </RightTitle>
       </TitleBox>
@@ -28,7 +28,7 @@ const MyTodoList = ({
             <CheckBox>
               <CheckInput
                 onChange={() => {
-                  todoCompleted(i.id, i.todo, i.isCompleted);
+                  completedTodo(i.id, i.todo, i.isCompleted);
                 }}
                 type={"checkbox"}
                 checked={i.isCompleted}
@@ -43,6 +43,7 @@ const MyTodoList = ({
                   onClick={() => {
                     openModal(i.id, i.todo, i.isCompleted);
                   }}
+                  // completed boolean -> display hidden
                   props={i.isCompleted}
                 >
                   수정
@@ -74,7 +75,7 @@ const Wrap = styled.div`
   flex-direction: column;
   background-color: #fff;
   position: relative;
-  padding: 15px;
+  padding: 15px 15px 0px 15px;
   border-radius: 15px;
   box-shadow: 0px 12px 42px rgba(0, 0, 0, 0.2);
 `;
@@ -85,7 +86,7 @@ const AddButtonBox = styled.div`
   border-radius: 50%;
   background-color: #3498db;
   position: absolute;
-  bottom: -13%;
+  bottom: -14%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -145,7 +146,6 @@ const MainBox = styled.div`
 const TodoListBox = styled.div`
   width: 100%;
   height: 70px;
-  /* border: 1px solid red; */
   display: flex;
   justify-content: space-between;
   align-items: center;

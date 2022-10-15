@@ -44,8 +44,9 @@ const Home = () => {
       instance
         .post("/auth/signup", userInfo)
         .then((res) => {
+          isSetErrorMsg("");
           alert("회원가입 완료되었습니다.");
-          setIsLogin(true);
+          setIsLogin(true);    
         })
         .catch((err) => {
           isSetErrorMsg(err.response.data.message)
@@ -91,7 +92,7 @@ const Home = () => {
     if (localUserToken) {
       navigate("/todo");
     }
-  }, [localUserToken]);
+  }, [localUserToken, navigate]);
 
   
   return (
