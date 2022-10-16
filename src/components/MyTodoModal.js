@@ -16,7 +16,7 @@ const MyTodoModal = ({
       <ModalMainBox onClick={(e) => e.stopPropagation()}>
         <CloseBtn onClick={closeClick}>x</CloseBtn>
         <TodoBox>
-          <TodoInput defaultValue={isTodoUpdate.todo} ref={todoRef} />
+          <TodoInput defaultValue={isTodoUpdate.todo} ref={todoRef} autoFocus />
           {isTodoUpdate.id ? (
             <TodoBtn
               onClick={() => {

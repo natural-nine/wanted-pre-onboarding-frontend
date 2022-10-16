@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const MyTodoList = ({
@@ -10,21 +10,30 @@ const MyTodoList = ({
   deleteTodo,
   openModal,
 }) => {
+  const todoScrollRef = useRef();
+  const scrollToBottom = () => {
+    if (todoScrollRef.current) {
+      todoScrollRef.current.scrollTop = todoScrollRef.current.scrollHeight;
+    }
+  };
+  useEffect(()=>{
+    scrollToBottom();
+  },[isTodoList]);
+
   return (
     <Wrap>
       <TitleBox>
         <LeftTitle>
           <h1>My Todo</h1>
-          <span>time</span>
         </LeftTitle>
         <RightTitle>
           <span>안녕하세요 {userMail} 님</span>
           <span onClick={logOutClick}>로그아웃 &rarr;</span>
         </RightTitle>
       </TitleBox>
-      <MainBox>
+      <MainBox ref={todoScrollRef}>
         {isTodoList?.map((i, idx) => (
-          <TodoListBox key={idx}>
+          <TodoListBox  key={idx}>
             <CheckBox>
               <CheckInput
                 onChange={() => {

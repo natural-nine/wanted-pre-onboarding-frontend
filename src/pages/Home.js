@@ -92,7 +92,7 @@ const Home = () => {
     if (localUserToken) {
       navigate("/todo");
     }
-  }, [localUserToken, navigate]);
+  }, [localUserToken]);
 
   
   return (

@@ -14,7 +14,6 @@ const Todo = () => {
   const [isModal, setIsModal] = useState(false);
   const [isTodoUpdate, setIsTodoUpdate] = useState({});
   const [isTodoList, setIsTodoList] = useState("");
-
   // todoList 가져오기
   const getTodos = () => {
     instance
@@ -41,13 +40,23 @@ const Todo = () => {
     if (!localUserToken) {
       navigate("/");
     }
-  }, [localUserToken, navigate]);
+  }, [localUserToken]);
 
   // todoList 등록
   const createTodo = () => {
     const todoText = todoRef.current.value;
+    console.log(todoText);
+    console.log(localUserToken);
     instance
-      .post("/todos", { todo:todoText })
+      .post(
+        "/todos",
+        { todo: todoText },
+        {
+          headers: {
+            Authorization: `Bearer ${localUserToken}`,
+          },
+        }
+      )
       .then((res) => {
         setIsTodoList((prev) => [...prev, res.data]);
       })
@@ -61,7 +70,15 @@ const Todo = () => {
   const completedTodo = (id, todo, completed) => {
     let isCompleted = !completed;
     instance
-      .put(`/todos/${id}`, { isCompleted, todo })
+      .put(
+        `/todos/${id}`,
+        { isCompleted, todo },
+        {
+          headers: {
+            Authorization: `Bearer ${localUserToken}`,
+          },
+        }
+      )
       .then(() => {
         setIsTodoList((todos) =>
           todos.map((i) =>
@@ -78,7 +95,15 @@ const Todo = () => {
   const updateTodo = (id, completed) => {
     const todoText = todoRef.current.value;
     instance
-      .put(`/todos/${id}`, { isCompleted: completed, todo: todoText })
+      .put(
+        `/todos/${id}`,
+        { isCompleted: completed, todo: todoText },
+        {
+          headers: {
+            Authorization: `Bearer ${localUserToken}`,
+          },
+        }
+      )
       .then(() => {
         setIsTodoList((todos) =>
           todos.map((i) =>
@@ -96,9 +121,15 @@ const Todo = () => {
 
   // todoList 삭제
   const deleteTodo = (id) => {
-    instance.delete(`/todos/${id}`).then(() => {
-      setIsTodoList((todo) => todo.filter((todo) => todo.id !== id));
-    });
+    instance
+      .delete(`/todos/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localUserToken}`,
+        },
+      })
+      .then(() => {
+        setIsTodoList((todo) => todo.filter((todo) => todo.id !== id));
+      });
   };
 
   // 로그아웃 로컬스토리지 삭제 -> "/" 페이지 이동
@@ -117,7 +148,7 @@ const Todo = () => {
       isCompleted: isCompleted,
     });
   };
-  
+
   return (
     <Wrap>
       {isTodoList && (
