@@ -37,4 +37,9 @@
 
 2. Todo List 페이지 `/todo`
 
-    -
+    - `/todo` 에서 작성한 todoList 가 있을시 이를 보여줍니다.
+    - todoList 등록 및 수정은 modal 창으로 구현했습니다.
+    - `+` 버튼 클릭 시 `input` 에 빈 값, `수정` 버튼 클릭 시 `input` 에 기존 값을 렌더링 합니다.
+    - 완료버튼은 체크박스로 구현했으며 클릭 시 `수정` 버튼이 사라집니다.
+    - `로그아웃` 클릭 시 localStorage 에 JWT Token 을 삭제하고 `/` 이동 합니다.
+    - `/todo` 페이지에서 localStorage 에 JWT Token 이 없을 시 `/` 로 리다이렉트 합니다.
