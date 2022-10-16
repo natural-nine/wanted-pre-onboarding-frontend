@@ -18,6 +18,10 @@ const Home = () => {
   // 에러메세지 핸들링 state
   const [isErrorMsg, isSetErrorMsg] = useState("");
 
+  // email 정규식 버튼 활성화 
+  const [isMailActive, setIsMailActive] = useState(false);
+  // password 정규식 버튼 활성화
+  const [isPwActive, setIsPwActive] = useState(false);
   // boolean 으로 회원가입, 로그인 컴포넌트 보여주기
   const [isLogin, setIsLogin] = useState(false);
 
@@ -94,7 +98,23 @@ const Home = () => {
     }
   }, [localUserToken]);
 
-  
+  // email 정규식 버튼 활성화 
+  const emailChange = (e) => {
+    if(emailRegEx.test(e.target.value)){
+      setIsMailActive(true);
+    }else{
+      setIsPwActive(false);
+    };
+  };
+
+  // password 정규식 버튼 활성화
+  const passwordChange = (e) => {
+    if(e.target.value.match(passwordRegEx) !== null){
+      setIsPwActive(true);
+    }else{
+      setIsPwActive(false);
+    };
+  };
   return (
     <Wrap>
       {isLogin ? (
@@ -104,6 +124,10 @@ const Home = () => {
           setIsLogin={setIsLogin}
           SignInSubmit={SignInSubmit}
           isErrorMsg={isErrorMsg}
+          emailChange={emailChange}
+          passwordChange={passwordChange}
+          isPwActive={isPwActive}
+          isMailActive={isMailActive}
         />
       ) : (
         <SignUp
@@ -113,6 +137,10 @@ const Home = () => {
           SignUpSubmit={SignUpSubmit}
           setIsLogin={setIsLogin}
           isErrorMsg={isErrorMsg}
+          emailChange={emailChange}
+          passwordChange={passwordChange}
+          isPwActive={isPwActive}
+          isMailActive={isMailActive}
         />
       )}
     </Wrap>
@@ -122,7 +150,6 @@ const Home = () => {
 const Wrap = styled.div`
   width: 100%;
   height: 100vh;
-  /* border: 1px solid red; */
   margin: auto;
   display: flex;
   flex-direction: column;

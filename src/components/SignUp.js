@@ -7,7 +7,11 @@ const SignUp = ({
   passwordRef,
   passwordConfirmRef,
   setIsLogin,
-  isErrorMsg
+  isErrorMsg,
+  emailChange,
+  passwordChange,
+  isMailActive,
+  isPwActive,
 }) => {
   return (
     <Wrap>
@@ -24,23 +28,33 @@ const SignUp = ({
       <UserForm onSubmit={SignUpSubmit}>
         <InputBox>
           <span>이메일</span>
-          <input type={"text"} ref={idRef} />
+          <input type={"text"} ref={idRef} onChange={emailChange} />
+          {!isMailActive && <span>이메일 형식을 맞춰 입력해주세요.</span>}
         </InputBox>
         <InputBox>
           <span>비밀번호</span>
-          <input type={"password"} ref={passwordRef} />
+          <input
+            type={"password"}
+            ref={passwordRef}
+            onChange={passwordChange}
+          />
+          {!isPwActive && <span>비밀번호는 최소 8자 이상입니다.</span>}
         </InputBox>
         <InputBox>
           <span>비밀번호 확인</span>
           <input type={"password"} ref={passwordConfirmRef} />
         </InputBox>
         <ErrorBox>
-          <span>
-            {isErrorMsg}
-          </span>
+          <span>{isErrorMsg}</span>
         </ErrorBox>
         <SubmitBox>
-          <SubmitButton>회원가입</SubmitButton>
+          {isMailActive && isPwActive ? (
+            <SubmitButton>회원가입</SubmitButton>
+          ) : (
+            <FakeBox>
+              <span>회원가입</span>
+            </FakeBox>
+          )}
         </SubmitBox>
       </UserForm>
     </Wrap>
@@ -81,8 +95,8 @@ const InputBox = styled.div`
   flex-direction: column;
   margin-left: 30%;
   margin-top: 20px;
-  span{
-    margin-bottom: 5px;
+  span {
+    margin: 3px 0px 3px 0px;
   }
   input {
     width: 70%;
@@ -92,6 +106,10 @@ const InputBox = styled.div`
     font-size: 1.3rem;
     border: 1px solid black;
   }
+  span:last-child {
+    color: red;
+    font-size: 0.8rem;
+  }
 `;
 const SubmitBox = styled.div`
   margin-top: 5px;
@@ -100,7 +118,7 @@ const SubmitBox = styled.div`
 const SubmitButton = styled.button`
   width: 100%;
   height: 55px;
-  border-radius:15px;
+  border-radius: 15px;
   border: none;
   background-color: #3498db;
   color: #fff;
@@ -115,9 +133,24 @@ const ErrorBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 5px;
-  span{
+  span {
     color: red;
   }
-`
+`;
+const FakeBox = styled.div`
+  width: 100%;
+  height: 55px;
+  border-radius: 15px;
+  border: none;
+  background-color: #3498db;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  span {
+    font-size: 1.5rem;
+    color: #fff;
+  }
+`;
 
 export default SignUp;
