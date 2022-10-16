@@ -44,10 +44,10 @@ const SignIn = ({
         </ErrorBox>
         <SubmitBox>
           {isMailActive && isPwActive ? (
-            <SubmitButton>회원가입</SubmitButton>
+            <SubmitButton>로그인</SubmitButton>
           ) : (
             <FakeBox>
-              <span>회원가입</span>
+              <span>로그인</span>
             </FakeBox>
           )}
         </SubmitBox>
