@@ -10,6 +10,8 @@ const MyTodoList = ({
   deleteTodo,
   openModal,
 }) => {
+  
+  // todoList 작성 시 밑으로 스크롤
   const todoScrollRef = useRef();
   const scrollToBottom = () => {
     if (todoScrollRef.current) {
