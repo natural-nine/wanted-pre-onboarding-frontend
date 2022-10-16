@@ -16,6 +16,8 @@
 
 # 배포 링크
 
+    https://natural-nine.github.io/wanted-pre-onboarding-frontend
+    
 # 주요기능
 
 | 페이지 | API 연결 및 기능 |
