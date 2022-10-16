@@ -4,7 +4,9 @@
 
 ```bash
     git clone https://github.com/natural-nine/wanted-pre-onboarding-frontend.git
+
     npm install
+    
     npm start
 ```
 
