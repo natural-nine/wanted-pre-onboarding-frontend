@@ -16,7 +16,7 @@
 
 # 배포 링크
 
-    https://natural-nine.github.io/wanted-pre-onboarding-frontend
+https://natural-nine.github.io/wanted-pre-onboarding-frontend
     
 # 주요기능
 
