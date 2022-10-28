@@ -14,6 +14,7 @@ function App() {
   box-sizing: border-box;
   }
   `;
+  console.log("test");
   return (
     <>
       <GlobalStyles />
