@@ -1,3 +1,4 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Home from "./pages/Home";
@@ -14,13 +15,12 @@ function App() {
   box-sizing: border-box;
   }
   `;
-  console.log("test");
   return (
     <>
       <GlobalStyles />
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="todo" element={<Todo/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="todo" element={<Todo />} />
       </Routes>
     </>
   );

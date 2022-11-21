@@ -1,30 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { SignTypes } from "../types/userTypes";
 
-const SignIn = ({
-  setIsLogin,
+const SignUp = ({
+  SignUpSubmit,
   idRef,
   passwordRef,
-  SignInSubmit,
+  passwordConfirmRef,
+  setIsLogin,
   isErrorMsg,
   emailChange,
   passwordChange,
   isMailActive,
   isPwActive,
-}) => {
+}:SignTypes) => {
   return (
     <Wrap>
       <TitleBox>
-        <h1>로그인</h1>
+        <h1>회원가입</h1>
         <span
           onClick={() => {
-            setIsLogin(false);
+            setIsLogin(true);
           }}
         >
-          회원가입 &rarr;
+          로그인 &rarr;
         </span>
       </TitleBox>
-      <UserForm onSubmit={SignInSubmit}>
+      <UserForm onSubmit={SignUpSubmit}>
         <InputBox>
           <span>이메일</span>
           <input type={"text"} ref={idRef} onChange={emailChange} />
@@ -39,15 +41,19 @@ const SignIn = ({
           />
           {!isPwActive && <span>비밀번호는 최소 8자 이상입니다.</span>}
         </InputBox>
+        <InputBox>
+          <span>비밀번호 확인</span>
+          <input type={"password"} ref={passwordConfirmRef} />
+        </InputBox>
         <ErrorBox>
-          <span>{isErrorMsg}</span>   
+          <span>{isErrorMsg}</span>
         </ErrorBox>
         <SubmitBox>
           {isMailActive && isPwActive ? (
-            <SubmitButton>로그인</SubmitButton>
+            <SubmitButton>회원가입</SubmitButton>
           ) : (
             <FakeBox>
-              <span>로그인</span>
+              <span>회원가입</span>
             </FakeBox>
           )}
         </SubmitBox>
@@ -55,7 +61,6 @@ const SignIn = ({
     </Wrap>
   );
 };
-
 const Wrap = styled.div`
   width: 60%;
   height: 700px;
@@ -100,7 +105,7 @@ const InputBox = styled.div`
     border-radius: 15px;
     padding: 5px 20px;
     font-size: 1.3rem;
-    border: 1px solid;
+    border: 1px solid black;
   }
   span:last-child {
     color: red;
@@ -121,6 +126,7 @@ const SubmitButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 `;
+
 const ErrorBox = styled.div`
   width: 70%;
   height: 35px;
@@ -132,7 +138,6 @@ const ErrorBox = styled.div`
     color: red;
   }
 `;
-
 const FakeBox = styled.div`
   width: 100%;
   height: 55px;
@@ -148,4 +153,5 @@ const FakeBox = styled.div`
     color: #fff;
   }
 `;
-export default SignIn;
+
+export default SignUp;

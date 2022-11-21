@@ -1,18 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { MyTodoTypes } from "../types/todosTypes";
 
 const MyTodoList = ({
   userMail,
   logOutClick,
-  setIsModal,
   isTodoList,
   completedTodo,
   deleteTodo,
   openModal,
-}) => {
+}:MyTodoTypes) => {
   
   // todoList 작성 시 밑으로 스크롤
-  const todoScrollRef = useRef();
+  const todoScrollRef = useRef<HTMLBodyElement>(null);
   const scrollToBottom = () => {
     if (todoScrollRef.current) {
       todoScrollRef.current.scrollTop = todoScrollRef.current.scrollHeight;
@@ -21,7 +21,7 @@ const MyTodoList = ({
   useEffect(()=>{
     scrollToBottom();
   },[isTodoList]);
-
+  
   return (
     <Wrap>
       <TitleBox>
@@ -33,7 +33,7 @@ const MyTodoList = ({
           <span onClick={logOutClick}>로그아웃 &rarr;</span>
         </RightTitle>
       </TitleBox>
-      <MainBox ref={todoScrollRef}>
+      <MainBox>
         {isTodoList?.map((i, idx) => (
           <TodoListBox  key={idx}>
             <CheckBox>
@@ -73,7 +73,7 @@ const MyTodoList = ({
           </TodoListBox>
         ))}
       </MainBox>
-      <AddButtonBox onClick={() => openModal(setIsModal(true))}>
+      <AddButtonBox onClick={() => openModal()}>
         <AddButton>+</AddButton>
       </AddButtonBox>
     </Wrap>
@@ -184,7 +184,7 @@ const TodoSpanBox = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
-const TodoSpan = styled.span`
+const TodoSpan = styled.span<{ props: boolean }>`
   font-size: 1.3rem;
   text-decoration: ${(props) => props.props && "line-through"};
   opacity: ${(props) => props.props && "0.3"};
@@ -203,7 +203,7 @@ const UpdateBtnBox = styled.div`
   height: 40px;
 `;
 
-const UpdateBtn = styled.button`
+const UpdateBtn = styled.button<{ props: boolean }>`
   width: 100%;
   height: 40px;
   border: none;
