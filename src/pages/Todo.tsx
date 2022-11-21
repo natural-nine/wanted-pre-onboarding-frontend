@@ -4,16 +4,17 @@ import styled from "styled-components";
 import MyTodoList from "../components/MyTodoList";
 import MyTodoModal from "../components/MyTodoModal";
 import instance from "../shared/axios";
+import { TodoListTypes, UpdateTodoTypes } from "../types/todosTypes";
 
 const Todo = () => {
   const navigate = useNavigate();
   const localUserToken = localStorage.getItem("userToken");
-  const userMail = localStorage.getItem("userMail");
+  const userMail = localStorage.getItem("userMail")!;
 
-  const todoRef = useRef();
-  const [isModal, setIsModal] = useState(false);
-  const [isTodoUpdate, setIsTodoUpdate] = useState({});
-  const [isTodoList, setIsTodoList] = useState("");
+  const todoRef = useRef<HTMLInputElement>(null);
+  const [isModal, setIsModal] = useState<Boolean>(false);
+  const [isTodoUpdate, setIsTodoUpdate] = useState<UpdateTodoTypes>({});
+  const [isTodoList, setIsTodoList] = useState<TodoListTypes[]>([]);
   // todoList 가져오기
   const getTodos = () => {
     instance
@@ -44,9 +45,7 @@ const Todo = () => {
 
   // todoList 등록
   const createTodo = () => {
-    const todoText = todoRef.current.value;
-    console.log(todoText);
-    console.log(localUserToken);
+    const todoText = todoRef.current!.value;
     instance
       .post(
         "/todos",
@@ -67,7 +66,7 @@ const Todo = () => {
   };
 
   // todoList 완료
-  const completedTodo = (id, todo, completed) => {
+  const completedTodo = (id:Number, todo:String, completed:Boolean) => {
     let isCompleted = !completed;
     instance
       .put(
@@ -92,8 +91,8 @@ const Todo = () => {
   };
 
   // todoList 수정
-  const updateTodo = (id, completed) => {
-    const todoText = todoRef.current.value;
+  const updateTodo = (id:number, completed:boolean) => {
+    const todoText = todoRef.current!.value;
     instance
       .put(
         `/todos/${id}`,
@@ -120,7 +119,7 @@ const Todo = () => {
   };
 
   // todoList 삭제
-  const deleteTodo = (id) => {
+  const deleteTodo = (id:number) => {
     instance
       .delete(`/todos/${id}`, {
         headers: {
@@ -140,7 +139,7 @@ const Todo = () => {
   };
 
   // 모달 오픈
-  const openModal = (id, todo, isCompleted) => {
+  const openModal = (id?:number, todo?:string, isCompleted?:boolean) => {
     setIsModal(true);
     setIsTodoUpdate({
       id: id,

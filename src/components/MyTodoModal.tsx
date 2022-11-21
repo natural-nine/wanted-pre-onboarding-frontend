@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { MyTodoModalTypes } from "../types/todosTypes";
 
 const MyTodoModal = ({
   closeModal,
@@ -7,7 +8,7 @@ const MyTodoModal = ({
   createTodo,
   isTodoUpdate,
   updateTodo,
-}) => {
+}: MyTodoModalTypes) => {
   const closeClick = () => {
     closeModal();
   };
@@ -20,10 +21,7 @@ const MyTodoModal = ({
           {isTodoUpdate.id ? (
             <TodoBtn
               onClick={() => {
-                updateTodo(
-                  isTodoUpdate.id,
-                  isTodoUpdate.isCompleted
-                );
+                updateTodo(isTodoUpdate.id!, isTodoUpdate.isCompleted!);
               }}
             >
               수정
